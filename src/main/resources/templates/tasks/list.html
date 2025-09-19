@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<!--/* 4行目 Thymeleaf Layout Dialectを使用し、テンプレートの共通化を行う*/-->
+<head>
+    <title>タスク一覧</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <!--/* タスク作成ページへのリンク */-->
+        <div>
+            <a th:href="@{/tasks/creationForm}" class="btn btn-primary">新規作成</a>
+        </div>
+        <!--/* 検索用 */-->
+        <div class="card mt-3">
+            <div class="card-header">検索</div>
+            <div class="card-body mt-3">
+                <form th:action="@{/tasks}" method="get" th:object="${searchDTO}">
+                    <div class="form-group">
+                        <label class="form-label" for="summarySearch">概要</label>
+                        <input class="from-control" id="summarySearch" name="summary" placeholder="概要" th:field="*{summary}">
+                    </div>
+                    <div class="form-group mt-3">
+                        <div>
+                            <label class="form-label">ステータス</label>
+                        </div>
+                        <div class="btn-group">
+                            <input class="btn-check" type="checkbox" id="summarySearchTodo" name="status" value="TODO" th:checked="*{isChecked('TODO')}">
+                            <label class="btn btn-outline-primary" for="summarySearchTodo">TODO</label>
+                            <input class="btn-check" type="checkbox" id="summarySearchDoing" name="status" value="DOING" th:checked="*{isChecked('DOING')}">
+                            <label class="btn btn-outline-primary" for="summarySearchDoing">DOING</label>
+                            <input class="btn-check" type="checkbox" id="summarySearchDone" name="status" value="DONE" th:checked="*{isChecked('DONE')}">
+                            <label class="btn btn-outline-primary" for="summarySearchDone">DONE</label>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">検索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <table  id="table_id" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>概要</th>
+                    <th>ステータス</th>
+                    <th>期限</th>
+                    <th>更新日</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--/*th:each　：　拡張for分のように要素数繰り返す*/-->
+                <!--/*th:object　：　タグ内では、*{}で呼び出せる*/-->
+                <tr th:each="task : ${taskList}" th:object="${task}">
+                    <td><a th:href="@{/tasks/{id}(id=*{id})}" th:text="'#' + *{id}"></a></td>
+                    <td><a th:href="@{/tasks/{id}(id=*{id})}" th:text="*{summary}"></a></td>
+                    <td th:text="*{status}"></td>
+                    <td th:text="*{remaining_days} + '日' "></td>
+                    <td th:text="*{last_updated}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>

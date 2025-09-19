@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--/* 4行目 Thymeleaf Layout Dialectを使用し、テンプレートの共通化を行う*/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--/*-->
+            ブラウザのタブを可変で表示する
+            CONTENT_TITLE：htmlファイルのtitleタグの中身　
+            LAYOUT_TITLE：leyout.htmlのタイトルタグの中身（現状はTODOアプリ）
+    <!--*/-->
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">TODOアプリ</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <!--/*tableの並び替え*/-->
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/rr-1.5.0/datatables.min.css" rel="stylesheet" integrity="sha384-jVUkkQHwJp8+s2XpcKffh6wkzHt5iqmstb9RPGw/oy6cRQTsRhYHZFnSehkeNEW8" crossorigin="anonymous">
+</head>
+<body>
+
+
+    <!-- ブラウザで見えるコメント -->
+    <!--/* ブラウザから見えないコメント */-->
+    <!--/*-->
+    複数行のコメントの場合
+    この書き方はレスポンスに含まれない
+    <!--*/-->
+
+    <!--/* Bootstrapを使用する際は divタグのクラスcontainerで囲う*/-->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/}">TODO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/tasks}">タスク一覧</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section layout:fragment="content" class="mt-3">
+            <!--/* 変数：contentで渡された内容がここに書き出される */-->
+        </section>
+    </div>
+
+    <!--/* 1. jQuery (DataTablesやBootstrapのJSより先に読み込む) */-->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <!--/* 2. BootstrapのJS */-->
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <!--/* 3. DataTablesのJS */-->
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/rr-1.5.0/datatables.min.js" integrity="sha384-KtP8I3jzDXGCVK2MxMYe8mMx56/Hr9Sg/Em6k7+uf6Y9/3r38BGykSIKpeuU1s0v" crossorigin="anonymous"></script>
+    <!--/* 4. 自作のJSファイルを読み込む */-->
+    <script th:src="@{/js/table-sort.js}"></script>
+</body>
+</html>

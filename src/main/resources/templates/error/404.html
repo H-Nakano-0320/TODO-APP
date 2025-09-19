@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+      <!--/* 4行目 Thymeleaf Layout Dialectを使用し、テンプレートの共通化を行う*/-->
+<head>
+    <title>トップページ</title>
+</head>
+<body>
+    <!--/* layout.htmlにcontentという名前で渡す　*/-->
+  　<section layout:fragment="content">
+        <div class="text-center">
+            <!--/* display-1：Bootstrapで大きな文字にする */-->
+            <h1 class="display-1">404 Not Found</h1>
+            <p>お探しのページは見つかりませんでした。</p>
+            <!--/*-->
+                class
+                    btn：ボタンにする
+                    btn-primary：青色のボタンにする
+                    mt-3：上にマージンをつける
+            <!--*/-->
+            <a th:href="@{/}" class="btn btn-secondary mt-3">トップページに戻る</a>
+        </div>
+    </section>
+</body>
+</html>

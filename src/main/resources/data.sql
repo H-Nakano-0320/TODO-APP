@@ -1,0 +1,3 @@
+INSERT INTO tasks(summary, description, status, due_date) VALUES ('Spring Bootを学ぶ', 'TODO アプリを作る', 'DONE', '2025-10-01 12:00:00.000000');
+INSERT INTO tasks(summary, description, status, due_date) VALUES ('Spring Securityを学ぶ', 'ログイン機能を作る', 'TODO', '2025-10-02 12:00:00.000000');
+INSERT INTO tasks(summary, description, status, due_date) VALUES ('期限切れタスク', '期限の計算の確認', 'DOING', '2025-09-01 12:00:00.000000');
