@@ -1,34 +1,34 @@
-# Stage 1: Build the application
+# アプリケーションの構築
 FROM eclipse-temurin:17-jdk-jammy as builder
 
 WORKDIR /workspace
 
-# Copy gradle wrapper and build files
+# Gradleラッパーとビルドファイルをコピーする
 COPY gradlew .
 COPY gradlew.bat .
 COPY gradle ./gradle
 COPY build.gradle .
 COPY settings.gradle .
 
-# Make gradlew executable (important for Linux container)
+# gradlewを実行可能にする
 RUN chmod +x gradlew
 
-# Copy the source code
+# ソースコードをコピーする
 COPY src ./src
 
-# Build the application and create the executable jar
+# アプリケーションをビルドし、実行可能JARファイルを作成する
 RUN ./gradlew bootJar
 
-# Stage 2: Create the final, smaller image
+# 最終的な、より小さなイメージを作成する
 FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
-# Copy the executable jar from the builder stage
+# ビルダーステージから実行可能JARをコピーする
 COPY --from=builder /workspace/build/libs/*.jar app.jar
 
-# Expose the port the app runs on
+# アプリが動作するポートを公開する
 EXPOSE 8080
 
-# Command to run the application
+# アプリケーションを実行するコマンド
 ENTRYPOINT ["java", "-jar", "app.jar"]

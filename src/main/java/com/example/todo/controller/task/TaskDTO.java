@@ -16,7 +16,8 @@ public record TaskDTO(
         LocalDateTime create_at,
         LocalDateTime update_at,
         String due_date,
-        String remaining_days
+        String remaining_days,
+        boolean isOverdue
 ) {
     // staticメソッドで定義されている
     public static TaskDTO toDTO(TaskEntity entity) {
@@ -34,6 +35,7 @@ public record TaskDTO(
          */
         // 期限までの残日数計算
         String remainingDays;
+        boolean isOverdue = false;
 
 
         // 最終更新日の取得とフォーマット
@@ -50,6 +52,7 @@ public record TaskDTO(
             // 現在日時の取得とフォーマット
             LocalDate today = LocalDate.now();
             long days = ChronoUnit.DAYS.between(today, entity.due_date());
+            isOverdue = isOverdue(days);
             remainingDays = Long.toString(days);
         } else {
             remainingDays = "-";
@@ -64,8 +67,16 @@ public record TaskDTO(
                 entity.create_at(),
                 entity.update_at(),
                 formatDueDate,
-                remainingDays
+                remainingDays,
+                isOverdue
         );
+    }
+
+    /*
+     * 期限切れの判定
+     */
+    static boolean isOverdue(long day){
+        return day < 0;
     }
 
 }
