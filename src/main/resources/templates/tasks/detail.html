@@ -38,13 +38,8 @@
                 <h2 class="card-header d-flex justify-content-between align-items-baseline">
                     <!-- 左側に表示するタイトル -->
                     <span th:text="'#' + *{id} + ' ' + *{summary}"></span>
-                    <!--/*  h6で少し文字を小さく、mb-0でマージンを削除 */-->
-                    <span class="h6 mb-0" th:if="*{due_date != '-'}">
-                          期限:
-                          <span th:text="*{due_date}"></span>
-                          (<span th:text="*{remaining_days} + '日'"
-                                 th:classappend="*{isOverdue} ? 'text-danger'"></span>)
-                      </span>
+                    <!--/*  フラグメントを呼び出す */-->
+                    <div class="h6 mb-0" th:replace="~{fragments/common :: dueDate(task=${task})}"></div>
                 </h2>
                 <div class="card-body">
                     <p th:text="*{status}"></p>
